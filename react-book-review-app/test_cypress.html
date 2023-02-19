@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>サンプル</title>
+    </head>
+    
+    <body>
+        <h1> 登録フォーム　</h1>
+        メールアドレス
+        <input type="email" id="input-email"/>
+        <p>権限
+        <select id="select-role">
+            <option value="一般">一般</option>
+            <option value="管理者">管理者</option>
+        </select></p>   
+
+        <input type="button" value="登録" id="submit" onclick="Submit()"/>
+        <p id='result-email'>未記入</p>
+        <p id='result-role'>未記入</p>
+
+        <script>
+        function Submit() {
+        document.getElementById('result-email').textContent =
+            document.getElementById("input-email").value;
+
+        document.getElementById('result-role').textContent =
+            document.getElementById("select-role").value;
+        }
+        </script>
+    </body>
+</html>
