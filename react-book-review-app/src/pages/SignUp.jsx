@@ -6,6 +6,7 @@ import { Header } from '../components/Header'
 import { url } from '../const'
 // import './signUp.scss'
 import { useForm } from "react-hook-form"
+import Compressor from 'compressorjs'
 
 export const SignUp = () => {
   const navigate = useNavigate()
@@ -19,6 +20,16 @@ export const SignUp = () => {
       name: data.name,
       password: data.password,
     }
+    const iconRow = data.image[0]
+    const iconCompressor = new Compressor(iconRow, {
+      quality: 0.8,
+      success: (result) => {
+          console.log("画像圧縮成功")
+          const resultFile = new File([result], 'image.jpeg', {
+            type: result.type,
+        });
+          return resultFile
+      }});  
 
     axios
       .post(`${url}/users`, usersPayload)
@@ -30,7 +41,7 @@ export const SignUp = () => {
         axios
           .post(
             `${url}/uploads`,
-            {icon: data.image[0]},
+            {icon: iconCompressor.file},
             {headers:
               {
                 'Accept': 'application/json',
@@ -60,7 +71,6 @@ export const SignUp = () => {
         <h2>新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         
-
         <form className="signup-form" onSubmit={handleSubmit(onSignUp)}>
           <label>メールアドレス</label>
           <input

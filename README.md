@@ -5,6 +5,7 @@
 cd react-book-review-app
 ```
 ```
-npx cypress run --spec=./cypress/e2e/Sample-test.cy.js
+npx cypress open
 ```
 ```npm run test```
+npm test login.test.js

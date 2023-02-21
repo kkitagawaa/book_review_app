@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { useNavigate, Link } from 'react-router-dom'
 import { Header } from '../components/Header'
 // import './signin.scss'
 import { url } from '../const'
 import { useForm } from "react-hook-form"
+import axios from 'axios'
 
 export const LogIn = () => {
 
@@ -42,9 +42,10 @@ export const LogIn = () => {
         <p className="error-message">{errorMessage}</p>
 
         <form className="login-form" onSubmit={handleSubmit(onLogIn)}>
-          <label className="email-label">メールアドレス</label>
+          <label className="email-label" htmlFor='login-email-input'>メールアドレス</label>
           <input
             className="email-input"
+            id='login-email-input'
             label="メールアドレス"
             type="email"
             {...register("email", { required: true})}
