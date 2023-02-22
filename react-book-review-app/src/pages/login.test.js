@@ -15,6 +15,6 @@ describe("renders login component", () => {
       <BrowserRouter>
         <LogIn />
       </BrowserRouter>);
-    screen.getByLabelText("メールアドレス")
+    expect(screen.getByLabelText("メールアドレス")).toBeInTheDocument()
   })
 });

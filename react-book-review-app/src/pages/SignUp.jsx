@@ -12,7 +12,7 @@ export const SignUp = () => {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessge] = useState()
   const [cookies, setCookie] = useCookies()
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSignUp = (data) => {
     const usersPayload = {
@@ -77,30 +77,58 @@ export const SignUp = () => {
             className="email-input"
             label="メールアドレス"
             type="email"
-            {...register("email", { required: true})}
-          /><br />
+            {...register("email", { 
+              required: "必須項目です",
+              pattern: {
+                value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+                message: '正しいメールアドレスを入力してください'
+              }
+            })}
+          />
+          <span className="error-message">
+            {errors.email?.message}<br />
+          </span><br />
           <label>ユーザ名</label>
           <input
             className="name-input"
             label="ユーザ名"
             type="text"
-            {...register("name", { required: true})}
-          /><br />
+            {...register("name", { 
+              required: '必須項目です',
+            })}
+          />
+          <span className="error-message">
+            {errors.name?.message}<br />
+          </span><br />
           <label>パスワード</label>
           <input
             className="password-input"
             label="パスワード"
             type="password"
-            {...register("password", { required: true})}
-          /><br />
+            {...register("password", { 
+              required: '必須項目です',
+              minLength: {
+                value: 6,
+                message: 'パスワードは6文字以上で入力してください',
+              }
+            })}
+          />
+          <span className="error-message">
+            {errors.password?.message}<br />
+          </span><br />
           <label>画像</label>
           <input
             className="image-input"
             label="画像"
             type="file"
             accept="image/*"
-            {...register("image", { required: true})}
-          /><br />
+            {...register("image", { 
+              required: '必須項目です',
+            })}
+          />
+          <span className="error-message">
+            {errors.image?.message}<br />
+          </span><br />
           <input className="signup-button" type="submit" value="サインアップ" />
         </form>
       </main>

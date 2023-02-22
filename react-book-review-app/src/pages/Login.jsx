@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useNavigate, Link } from 'react-router-dom'
 import { Header } from '../components/Header'
-// import './signin.scss'
+import './login.css'
 import { url } from '../const'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
@@ -17,7 +17,7 @@ export const LogIn = () => {
   const handleEmailChange = (e) => setEmail(e.target.value)
   const handlePasswordChange = (e) => setPassword(e.target.value)
 
-  const { register, handleSubmit} = useForm();
+  const { register, handleSubmit, formState: { errors }} = useForm();
 
   const onLogIn = () => {
     axios
@@ -47,18 +47,36 @@ export const LogIn = () => {
             className="email-input"
             id='login-email-input'
             label="メールアドレス"
-            type="email"
-            {...register("email", { required: true})}
+            // type="email"
+            {...register("email", { 
+              required: "必須項目です",
+              pattern: {
+                value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+                message: '正しいメールアドレスを入力してください'
+              }
+            })}
             onChange={handleEmailChange}
-          /><br />
+          />
+          <span className="error-message">
+            {errors.email?.message}<br />
+          </span>
           <label className="password-label">パスワード</label>
           <input
             className="password-input"
             label="パスワード"
             type="password"
-            {...register("password", { required: true})}
+            {...register("password", { 
+              required: '必須項目です',
+              minLength: {
+                value: 6,
+                message: 'パスワードは6文字以上で入力してください',
+              }
+            })}
             onChange={handlePasswordChange}
-          /><br />
+          />
+          <span className="error-message">
+            {errors.password?.message}<br />
+          </span>
           <input className="login-button" type="submit" value="ログイン" />
         </form>
 
