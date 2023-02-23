@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import { Header } from '../components/Header'
 import { url } from '../const'
-// import './signUp.scss'
+import './signup.css'
 import { useForm } from "react-hook-form"
 import Compressor from 'compressorjs'
 
@@ -76,7 +76,6 @@ export const SignUp = () => {
           <input
             className="email-input"
             label="メールアドレス"
-            type="email"
             {...register("email", { 
               required: "必須項目です",
               pattern: {
