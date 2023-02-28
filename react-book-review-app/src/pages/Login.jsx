@@ -25,7 +25,7 @@ export const LogIn = () => {
       .then((res) => {
         setCookie('token', res.data.token)
         console.log("ログインに成功しました")
-        navigate('/')
+        navigate('/list') // 後でパスを変える。
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`)

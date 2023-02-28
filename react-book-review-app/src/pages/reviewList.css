@@ -1,0 +1,11 @@
+.review-list {
+    background-color: lightgray;
+}
+
+.review-list__errorMessage {
+    color: red;
+}
+
+.review-list__link {
+    border: 1px solid;
+}
