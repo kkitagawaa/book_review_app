@@ -5,11 +5,9 @@ import { useCookies } from 'react-cookie'
 import { url } from '../const'
 import './reviewList.css' 
 import ReactPaginate from 'react-paginate'
-import "./home.css"
 
 export const ReviewList = () => {
     const [reviewList, setReviewList] = useState([])
-    // const [offset, setOffset] = useState(0)
     const [errorMessage, setErrorMessage] = useState('')
     const [cookies] = useCookies()
 

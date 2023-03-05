@@ -6,9 +6,12 @@ import './login.css'
 import { url } from '../const'
 import { useForm } from "react-hook-form"
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { signIn } from '../authSlice'
 
 export const LogIn = () => {
-
+  const auth = useSelector((state) => state.auth.isSignIn)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -25,14 +28,15 @@ export const LogIn = () => {
       .then((res) => {
         setCookie('token', res.data.token)
         console.log("ログインに成功しました")
-        navigate('/list') // 後でパスを変える。
+        dispatch(signIn())
+        navigate('/')
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`)
       })
   }
 
-//   if (auth) return navigate('/')
+  if (auth) return navigate('/')
 
   return (
     <div>

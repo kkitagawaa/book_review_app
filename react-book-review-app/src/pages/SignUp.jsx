@@ -51,7 +51,7 @@ export const SignUp = () => {
             }) 
           .then(() => {
             console.log("画像アップロード成功")
-            navigate('/')
+            navigate('/login')
           })
           .catch((err) => {
             setErrorMessge(`画像アップロードに失敗しました。 ${err}`)

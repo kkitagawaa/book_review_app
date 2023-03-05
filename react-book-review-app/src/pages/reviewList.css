@@ -1,11 +1,33 @@
 .review-list {
     background-color: lightgray;
 }
-
 .review-list__errorMessage {
     color: red;
 }
-
 .review-list__link {
     border: 1px solid;
+}
+
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 20px 6px;
+}
+.page-item,
+.page-link {
+    list-style:none;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 50%;
+    justify-content: center;
+    width: 40px;
+}
+.active {
+    color: green;
+    font-weight: 700;
+    font-size: 16px;
 }

@@ -1,19 +1,29 @@
 import React from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { SignUp } from '../pages/SignUp'
 import { LogIn } from '../pages/Login'
-import { Home } from '../pages/Home'
 import { ReviewList } from '../pages/ReviewList'
 
 export const Router = () => {
+    const auth = useSelector((state) => state.auth.isSignIn)
+
     return (
         <BrowserRouter>
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/signup" element={<SignUp />} />
-                <Route exact path="/login" element={<LogIn />} />
-                <Route exact path="/list" element={<ReviewList />} />
-                {/* 後でパス変える */}
+                {auth? (
+                    <>
+                        <Route exact path="/signup" element={<Navigate to="/" />} />
+                        <Route exact path="/login" element={<Navigate to="/" />} />
+                        <Route exact path="/" element={<ReviewList />} />
+                    </>
+                ) : (
+                    <>
+                        <Route exact path="/signup" element={<SignUp />} />
+                        <Route exact path="/login" element={<LogIn />} />
+                        <Route exact path="/" element={<Navigate to="/signup" />} />
+                    </>
+                )}
             </Routes>
         </BrowserRouter>
     )
