@@ -4,14 +4,36 @@ import axios from 'axios'
 import { useCookies } from 'react-cookie'
 import { url } from '../const'
 import './reviewList.css' 
+import ReactPaginate from 'react-paginate'
+import "./home.css"
 
 export const ReviewList = () => {
     const [reviewList, setReviewList] = useState([])
-    const [offset, setOffset] = useState(0)
+    // const [offset, setOffset] = useState(0)
     const [errorMessage, setErrorMessage] = useState('')
     const [cookies] = useCookies()
 
     useEffect(() => {
+        axios
+            .get(`${url}/books?offset=0`, {
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${cookies.token}`,
+                }
+            })
+            .then((res) => {
+                console.log(res.data)
+                setReviewList(res.data)
+            })
+            .catch((err) => {
+                setErrorMessage(`レビューの取得に失敗しました。${err}`)
+            })
+    }, [])
+
+
+    const hanflePageClick = (e) => {
+        const offset = e.selected * 10
+
         axios
             .get(`${url}/books?offset=${offset}`, {
                 headers: {
@@ -26,7 +48,7 @@ export const ReviewList = () => {
             .catch((err) => {
                 setErrorMessage(`レビューの取得に失敗しました。${err}`)
             })
-    }, [offset])
+    }
 
     return (
         <div>
@@ -48,6 +70,28 @@ export const ReviewList = () => {
                         </div>
                     )
                 })}
+
+                <ReactPaginate
+                    pageCount={5}
+                    onPageChange={hanflePageClick}
+                    containerClassName="pagination"
+                    
+                    previousLabel='<'
+                    nextLabel='>'
+                    
+                    pageClassName='page-item'
+                    pageLinkClassName='page-link'
+                    previousClassName='page-item'
+                    nextClassName='page-item'
+                    previousLinkClassName='page-link'
+                    nextLinkClassName='page-link'
+                    
+                    activeClassName='active'
+
+                    breakLabel='...'
+                    breakClassName='page-item'
+                    breakLinkClassName='page-link'
+                />
             </div>
         </div>
     )
