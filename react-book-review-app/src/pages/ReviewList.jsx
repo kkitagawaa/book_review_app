@@ -60,9 +60,9 @@ export const ReviewList = () => {
                         <div className='review-list__link' key={review.id}>
                             {/* <Link to={'/' + review.id }> */}
                                 <div className='' id={review.id}>
-                                    <span className='review-list__title'>本のタイトル： {review.title}</span><br/>
-                                    <span className='review-list__review'>レビュー： {review.review}</span><br/>
-                                    <span className='review-list__reviewer'>投稿者： {review.reviewer}</span>
+                                    <div className='review-list__title'>本のタイトル： {review.title}</div>
+                                    <div className='review-list__review'>レビュー： {review.review}</div>
+                                    <div className='review-list__reviewer'>投稿者： {review.reviewer}</div>
                                 </div>
                             {/* </Link> */}
                         </div>
