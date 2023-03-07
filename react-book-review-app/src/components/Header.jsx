@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './header.css'
-import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { url } from '../const'
 import { useCookies } from 'react-cookie'
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut } from '../authSlice'
 
 
 export const Header = () => {
     const auth = useSelector((state) => state.auth.isSignIn)
+    const dispatch = useDispatch()
     const [name, setName] = useState("")
-    const [cookies] = useCookies()
+    const [cookies, removeCookie] = useCookies()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -36,7 +38,12 @@ export const Header = () => {
     const handleProfile = () => {
         navigate('/profile')
     }
-
+    const handleLogout = () => {
+        dispatch(signOut())
+        removeCookie('token')
+        navigate('/login')
+    }
+ 
     return (
         <header className="header">
             <h1>書籍レビューアプリ</h1>
@@ -48,6 +55,9 @@ export const Header = () => {
                     {name}でログイン中
                     <button onClick={handleProfile} className="change-profile-button">
                         ユーザー名変更
+                    </button>
+                    <button onClick={handleLogout} className="logout-button">
+                        ログアウト
                     </button>
                 </>
             ): (
