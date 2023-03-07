@@ -22,16 +22,19 @@ export const Header = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 setName(res.data.name)
             })
     }, [])
 
-    const handleSignup = () =>{
+    const handleSignup = () => {
         navigate('/signup')
     }
-    const handleLogin = () =>{
+    const handleLogin = () => {
         navigate('/login')
+    }
+    const handleProfile = () => {
+        navigate('/profile')
     }
 
     return (
@@ -43,6 +46,9 @@ export const Header = () => {
             {auth? (
                 <>
                     {name}でログイン中
+                    <button onClick={handleProfile} className="change-profile-button">
+                        ユーザー名変更
+                    </button>
                 </>
             ): (
                 <>

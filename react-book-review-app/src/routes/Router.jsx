@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { SignUp } from '../pages/SignUp'
 import { LogIn } from '../pages/Login'
 import { ReviewList } from '../pages/ReviewList'
+import { Profile } from '../pages/Profile'
 
 export const Router = () => {
     const auth = useSelector((state) => state.auth.isSignIn)
@@ -16,6 +17,7 @@ export const Router = () => {
                         <Route exact path="/signup" element={<Navigate to="/" />} />
                         <Route exact path="/login" element={<Navigate to="/" />} />
                         <Route exact path="/" element={<ReviewList />} />
+                        <Route exact path="/profile" element={<Profile />} />
                     </>
                 ) : (
                     <>
