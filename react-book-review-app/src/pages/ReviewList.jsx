@@ -5,11 +5,17 @@ import { useCookies } from 'react-cookie'
 import { url } from '../const'
 import './reviewList.css' 
 import ReactPaginate from 'react-paginate'
+import { useNavigate } from 'react-router-dom'
 
 export const ReviewList = () => {
     const [reviewList, setReviewList] = useState([])
     const [errorMessage, setErrorMessage] = useState('')
     const [cookies] = useCookies()
+    const navigate = useNavigate()
+
+    const handleNewReview = () => {
+        navigate('/new')
+    }
 
     useEffect(() => {
         axios
@@ -20,7 +26,6 @@ export const ReviewList = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data)
                 setReviewList(res.data)
             })
             .catch((err) => {
@@ -53,6 +58,9 @@ export const ReviewList = () => {
             <Header />
             <h2>Review List</h2>
             { errorMessage }
+            <button onClick={handleNewReview} className="new-review-button">
+                新規レビューの投稿はこちら
+            </button>
             <div className='review-list'>
                 <p className='review-list__errorMessage'>{ errorMessage }</p>
                 {reviewList.map((review) => {

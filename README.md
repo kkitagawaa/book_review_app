@@ -11,9 +11,7 @@ npx cypress open
 npm test login.test.js
 
 ## TODO
-- 一覧ページのurlを"/"にする
-    - いったん別urlで作る
-- ログインしているかどうかで表示を変える
+-
 
 ## reduxについて
 - store
