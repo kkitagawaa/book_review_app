@@ -6,6 +6,8 @@ import { LogIn } from '../pages/Login'
 import { ReviewList } from '../pages/ReviewList'
 import { Profile } from '../pages/Profile'
 import { NewReview } from '../pages/NewReview'
+import { ReviewInfo } from '../pages/ReviewInfo'
+import { EditReview } from '../pages/EditReview'
 
 export const Router = () => {
     const auth = useSelector((state) => state.auth.isSignIn)
@@ -20,6 +22,8 @@ export const Router = () => {
                         <Route exact path="/" element={<ReviewList />} />
                         <Route exact path="/profile" element={<Profile />} />
                         <Route exact path="/new" element={<NewReview />} />
+                        <Route exact path="/detail/:reviewID" element={<ReviewInfo />} />
+                        <Route exact path="/edit/:reviewID" element={<EditReview />} />
                     </>
                 ) : (
                     <>

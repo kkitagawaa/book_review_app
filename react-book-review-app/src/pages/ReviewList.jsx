@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie'
 import { url } from '../const'
 import './reviewList.css' 
 import ReactPaginate from 'react-paginate'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export const ReviewList = () => {
     const [reviewList, setReviewList] = useState([])
@@ -15,6 +15,11 @@ export const ReviewList = () => {
 
     const handleNewReview = () => {
         navigate('/new')
+    }
+
+    const handleEditReview = (reviewId) => {
+        console.log("oooo")
+        navigate(`/edit/${reviewId}`)
     }
 
     useEffect(() => {
@@ -64,15 +69,24 @@ export const ReviewList = () => {
             <div className='review-list'>
                 <p className='review-list__errorMessage'>{ errorMessage }</p>
                 {reviewList.map((review) => {
+                    console.log(review.isMine)
                     return (
                         <div className='review-list__link' key={review.id}>
-                            {/* <Link to={'/' + review.id }> */}
+                            <Link to={'/detail/' + review.id }>
                                 <div className='' id={review.id}>
                                     <div className='review-list__title'>本のタイトル： {review.title}</div>
                                     <div className='review-list__review'>レビュー： {review.review}</div>
-                                    <div className='review-list__reviewer'>投稿者： {review.reviewer}</div>
+                                    <div className='review-list__reviewer'>投稿者： {review.reviewer}</div>                                    
                                 </div>
-                            {/* </Link> */}
+                            </Link>
+                            {review.isMine? (
+                                <button onClick={() => handleEditReview(review.id)} className="edit-review-button">
+                                    編集する
+                                </button>
+                                
+                            ) :(
+                                <div />
+                            )}
                         </div>
                     )
                 })}

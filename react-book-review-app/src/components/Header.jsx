@@ -47,9 +47,6 @@ export const Header = () => {
     return (
         <header className="header">
             <h1>書籍レビューアプリ</h1>
-            <button onClick={handleSignup} className="sign-out-button">
-                サインアップ
-            </button>
             {auth? (
                 <>
                     {name}でログイン中
@@ -62,6 +59,9 @@ export const Header = () => {
                 </>
             ): (
                 <>
+                    <button onClick={handleSignup} className="sign-out-button">
+                        サインアップ
+                    </button>
                     <button onClick={handleLogin} className="sign-out-button">
                         ログイン
                     </button>

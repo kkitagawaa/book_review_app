@@ -1,19 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { url } from "../const";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form"
 
-export const NewReview = () => {
+export const EditReview = () => {
     const navigate = useNavigate()
-    const [errorMessage, setErrorMessage] = useState()
+    const [errorMessage, setErrorMessage] = useState('')
     const [cookies] = useCookies()
+    const reviewID = useParams().reviewID
+    const [title, setTitle] = useState('')
+    const [bookurl, setBookUrl] = useState('')
+    const [detail, setDetail] = useState('')
+    const [review, setReview] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onPostNewReview = (data) => {
-        const newReviewPayload = {
+    useEffect(() => {
+        axios
+            .get(`${url}/books/${reviewID}`, {
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${cookies.token}`,
+                }
+            })
+            .then((res) => {
+                // console.log(res.data)
+                setTitle(res.data.title)
+                setBookUrl(res.data.url)
+                setDetail(res.data.detail)
+                setReview(res.data.review)
+            })
+    }, [])
+
+
+
+    const onEditReview = (data) => {
+        const editReviewPayload = {
             title: data.title,
             url: data.url,
             detail: data.detail,
@@ -21,33 +45,51 @@ export const NewReview = () => {
         }
 
         axios
-            .post(`${url}/books`, newReviewPayload, {
+            .put(`${url}/books/${reviewID}`, editReviewPayload, {
                 headers: {
                     accept: "application/json",
                     Authorization: `Bearer ${cookies.token}`,
                 }
             })
             .then((res) => {
-                console.log("レビュー投稿に成功")
+                console.log("レビュー編集に成功")
                 navigate('/')
             })
             .catch((err) => {
-                setErrorMessage(`レビューの投稿に失敗しました。 ${err}`)
+                setErrorMessage(`レビューの編集に失敗しました。 ${err}`)
             })
     }
 
-    return (
+    const handleDeleteReview = () => {
+        axios
+            .delete(`${url}/books/${reviewID}`, {
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${cookies.token}`,
+                }
+            })
+            .then((res) => {
+                console.log("レビュー削除に成功")
+                navigate('/')
+            })
+            .catch((err) => {
+                setErrorMessage(`レビューの削除に失敗しました。 ${err}`)
+            })
+
+    }  
+
+    return(
         <div>
             <Header />
-            <div className="post-new-review">
-                <h2>新規レビュー作成</h2>
-                <p className="error-message">{errorMessage}</p>
+            <h2>編集</h2>
+            <p className="error-message">{errorMessage}</p>
 
-                <form className="post-new-review-form" onSubmit={handleSubmit(onPostNewReview)}>
-                    <label>書籍タイトル</label>
+            <form className="change-profile-form" onSubmit={handleSubmit(onEditReview)}>
+            <label>書籍タイトル</label>
                     <input
                         className="title-input"
                         label="title"
+                        defaultValue={title}
                         {...register("title", {
                             required: "必須項目です"
                         })}
@@ -59,6 +101,7 @@ export const NewReview = () => {
                     <input
                         className="url-input"
                         label="url"
+                        defaultValue={bookurl}
                         {...register("url", {
                             required: "必須項目です"
                         })}
@@ -72,6 +115,7 @@ export const NewReview = () => {
                         rows="5"
                         className="detail-input"
                         label="detail"
+                        defaultValue={detail}
                         {...register("detail", {
                             required: "必須項目です"
                         })}
@@ -85,6 +129,7 @@ export const NewReview = () => {
                         rows="5"
                         className="review-input"
                         label="review"
+                        defaultValue={review}
                         {...register("review", {
                             required: "必須項目です"
                         })}
@@ -92,9 +137,10 @@ export const NewReview = () => {
                     <div className="error-message">
                         {errors.review?.message}
                     </div>
-                    <input className="post-new-review-button" type="submit" value="投稿する" />
-                </form>
-            </div>
+                    <button onClick={handleDeleteReview}>削除</button>
+                    <input className="edit-review-button" type="submit" value="編集する" />
+            </form>
+
         </div>
     )
 }
