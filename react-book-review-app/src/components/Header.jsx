@@ -15,19 +15,23 @@ export const Header = () => {
     const [cookies, removeCookie] = useCookies()
     const navigate = useNavigate()
 
+    
     useEffect(() => {
-        axios
-            .get(`${url}/users`, {
-                headers: {
-                    accept: "application/json",
-                    Authorization: `Bearer ${cookies.token}`,
-                }
-            })
-            .then((res) => {
-                // console.log(res.data)
-                setName(res.data.name)
-            })
+        if (auth) {
+            axios
+                .get(`${url}/users`, {
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${cookies.token}`,
+                    }
+                })
+                .then((res) => {
+                    // console.log(res.data)
+                    setName(res.data.name)
+                })
+        }
     }, [])
+    
 
     const handleSignup = () => {
         navigate('/signup')

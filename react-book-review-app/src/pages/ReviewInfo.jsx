@@ -67,7 +67,7 @@ export const ReviewInfo = () => {
             {isLoaded? (
                 <div className="review-info">
                     <p className="review-title">本のタイトル： {title}</p>
-                    <p className="review-url">書籍情報参照URL： {bookurl}</p>
+                    <p className="review-url">書籍情報参照URL： <a href={bookurl}>{bookurl}</a></p>
                     <p className="review-detail">書籍情報詳細： {detail}</p>
                     <p className="review-review">読んだ感想： {review}</p>
                     <p className="review-reviewer">投稿者： {reviewer}</p>

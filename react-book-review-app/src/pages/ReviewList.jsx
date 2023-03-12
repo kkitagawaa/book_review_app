@@ -18,7 +18,6 @@ export const ReviewList = () => {
     }
 
     const handleEditReview = (reviewId) => {
-        console.log("oooo")
         navigate(`/edit/${reviewId}`)
     }
 
@@ -50,7 +49,7 @@ export const ReviewList = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 setReviewList(res.data)
             })
             .catch((err) => {
@@ -69,7 +68,6 @@ export const ReviewList = () => {
             <div className='review-list'>
                 <p className='review-list__errorMessage'>{ errorMessage }</p>
                 {reviewList.map((review) => {
-                    console.log(review.isMine)
                     return (
                         <div className='review-list__link' key={review.id}>
                             <Link to={'/detail/' + review.id }>
